@@ -1,17 +1,38 @@
-import { Outlet, NavLink, useNavigate } from "react-router-dom";
+import {
+  Outlet,
+  NavLink,
+  useNavigate,
+} from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
 function MainLayout() {
-  const navigate = useNavigate();
-  const { logout, userId } = useAuth();
+  const navigate =
+    useNavigate();
 
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
-  };
+  const {
+    logout,
+    userId,
+  } = useAuth();
+
+  const handleLogout =
+    () => {
+      logout();
+      navigate(
+        "/login"
+      );
+    };
 
   return (
-    <>
+    <div
+      style={{
+        minHeight:
+          "100vh",
+        display:
+          "flex",
+        flexDirection:
+          "column",
+      }}
+    >
       <header className="site-header">
         <div className="header-inner">
           <img
@@ -22,18 +43,24 @@ function MainLayout() {
 
           <nav className="site-nav">
             <div className="nav-left-group">
-              <NavLink to={`/dashboard/${userId}`}>
+              <NavLink
+                to={`/dashboard/${userId}`}
+              >
                 Dashboard
               </NavLink>
 
-              <NavLink to={`/profile/${userId}`}>
+              <NavLink
+                to={`/profile/${userId}`}
+              >
                 Mon profil
               </NavLink>
             </div>
 
             <button
               type="button"
-              onClick={handleLogout}
+              onClick={
+                handleLogout
+              }
             >
               Se déconnecter
             </button>
@@ -41,17 +68,32 @@ function MainLayout() {
         </div>
       </header>
 
-      <main className="page-content">
+      <main
+        className="page-content"
+        style={{
+          flex: 1,
+        }}
+      >
         <Outlet />
       </main>
 
       <footer className="site-footer">
         <div className="footer-inner">
-          <span>©Sportsee Tous droits réservés</span>
+          <span>
+            ©Sportsee Tous
+            droits réservés
+          </span>
 
           <div className="footer-links">
-            <span>Conditions générales</span>
-            <span>Contact</span>
+            <span>
+              Conditions
+              générales
+            </span>
+
+            <span>
+              Contact
+            </span>
+
             <img
               src="/littleLogo.svg"
               alt=""
@@ -61,7 +103,7 @@ function MainLayout() {
           </div>
         </div>
       </footer>
-    </>
+    </div>
   );
 }
 
