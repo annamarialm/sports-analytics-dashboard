@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { loginUser } from "../services/api";
 import useAuth from "../hooks/useAuth";
 
 function LoginPage() {
@@ -19,20 +19,13 @@ function LoginPage() {
     setLoading(true);
 
     try {
-      const response = await axios.post(
-        "http://localhost:8000/api/login",
-        {
-          username,
-          password,
-        }
-      );
-
-      const { token, userId } = response.data;
+      const { token, userId } =
+        await loginUser(username, password);
 
       login(token, userId);
 
       navigate(`/dashboard/${userId}`);
-    } catch (err) {
+    } catch {
       setError("Identifiants invalides");
     } finally {
       setLoading(false);
