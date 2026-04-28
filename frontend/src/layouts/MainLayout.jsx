@@ -46,11 +46,19 @@ function MainLayout() {
       </main>
 
       <footer className="site-footer">
-        <span>©Sportsee Tous droits réservés</span>
+        <div className="footer-inner">
+          <span>©Sportsee Tous droits réservés</span>
 
-        <div className="footer-links">
-          <span>Conditions générales</span>
-          <span>Contact</span>
+          <div className="footer-links">
+            <span>Conditions générales</span>
+            <span>Contact</span>
+            <img
+              src="/littleLogo.svg"
+              alt=""
+              aria-hidden="true"
+              className="footer-logo"
+            />
+          </div>
         </div>
       </footer>
     </>

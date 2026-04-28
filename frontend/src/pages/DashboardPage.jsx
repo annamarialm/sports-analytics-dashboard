@@ -20,7 +20,18 @@ function DashboardPage() {
   }
 
   return (
-    <div className="dashboard-page">
+    <main
+      style={{
+        width: "1140px",
+        margin: "0 auto",
+        paddingTop: "75px",
+        paddingBottom: "80px",
+        display: "flex",
+        flexDirection: "column",
+        gap: "108px",
+        boxSizing: "border-box",
+      }}
+    >
       <DashboardHeader
         userInfo={userInfo}
       />
@@ -32,7 +43,7 @@ function DashboardPage() {
       <WeeklySection
         activity={activity}
       />
-    </div>
+    </main>
   );
 }
 
