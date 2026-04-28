@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import useAuth from "../hooks/useAuth";
 
 function LoginPage() {
@@ -9,42 +10,33 @@ function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const users = [
-    {
-      username: "sophiemartin",
-      password: "password123",
-      userId: 12,
-    },
-    {
-      username: "emmaleroy",
-      password: "password789",
-      userId: 18,
-    },
-    {
-      username: "marcdubois",
-      password: "password456",
-      userId: 25,
-    },
-  ];
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const foundUser = users.find(
-      (user) =>
-        user.username === username &&
-        user.password === password
-    );
+    setError("");
+    setLoading(true);
 
-    if (!foundUser) {
-      setError("Invalid credentials");
-      return;
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/login",
+        {
+          username,
+          password,
+        }
+      );
+
+      const { token, userId } = response.data;
+
+      login(token, userId);
+
+      navigate(`/dashboard/${userId}`);
+    } catch (err) {
+      setError("Identifiants invalides");
+    } finally {
+      setLoading(false);
     }
-
-    login("fake-jwt-token", foundUser.userId);
-
-    navigate(`/dashboard/${foundUser.userId}`);
   };
 
   return (
@@ -54,7 +46,7 @@ function LoginPage() {
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Username"
+          placeholder="Nom d'utilisateur"
           value={username}
           onChange={(event) =>
             setUsername(event.target.value)
@@ -63,15 +55,17 @@ function LoginPage() {
 
         <input
           type="password"
-          placeholder="Password"
+          placeholder="Mot de passe"
           value={password}
           onChange={(event) =>
             setPassword(event.target.value)
           }
         />
 
-        <button type="submit">
-          Se connecter
+        <button type="submit" disabled={loading}>
+          {loading
+            ? "Connexion..."
+            : "Se connecter"}
         </button>
       </form>
 
