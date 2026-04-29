@@ -58,6 +58,14 @@ function ProfilePage() {
       0
     );
 
+  const totalCalories =
+    activity.reduce(
+      (sum, item) =>
+        sum +
+        (item.caloriesBurned || 0),
+      0
+    );
+
   const sessionsCount =
     activity.length;
 
@@ -71,9 +79,8 @@ function ProfilePage() {
       unit: `${totalMinutes % 60}min`,
     },
     {
-      label:
-        "Calories brûlées",
-      main: `${stats.caloriesBurned ?? 0}`,
+      label: "Calories brûlées",
+      main: `${totalCalories}`,
       unit: "cal",
     },
     {
@@ -500,7 +507,7 @@ function ProfilePage() {
                       }}
                     >
                       {
-                        card.unitD
+                        card.unit
                       }
                     </span>
                   </div>
