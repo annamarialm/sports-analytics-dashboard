@@ -1,6 +1,19 @@
+import {
+  Navigate,
+  useParams,
+} from "react-router-dom";
+
 import useDashboardData from "../hooks/useDashboardData";
+import useAuth from "../hooks/useAuth";
+import NotFoundPage from "./NotFoundPage";
 
 function ProfilePage() {
+  const { userId } = useParams();
+
+  const {
+    userId: authUserId,
+  } = useAuth();
+
   const {
     userInfo,
     profileActivity,
@@ -8,12 +21,25 @@ function ProfilePage() {
     error,
   } = useDashboardData();
 
+  if (userId !== authUserId) {
+    return <NotFoundPage />;
+  }
+
   if (loading) {
     return <p>Chargement...</p>;
   }
 
   if (error) {
     return <p>{error}</p>;
+  }
+
+  if (!userInfo || !userInfo.profile) {
+    return (
+      <Navigate
+        to="/login"
+        replace
+      />
+    );
   }
 
   const profile =
@@ -41,7 +67,7 @@ function ProfilePage() {
       : profile.gender === "male"
         ? "Homme"
         : "Non renseigné";
-        
+
   const height =
     profile.height ??
     "Non renseigné";
@@ -85,8 +111,7 @@ function ProfilePage() {
       main: `${Math.floor(
         totalMinutes / 60
       )}h`,
-      unit: `${totalMinutes % 60
-        }min`,
+      unit: `${totalMinutes % 60}min`,
     },
     {
       label:
@@ -336,12 +361,10 @@ function ProfilePage() {
               >
                 Taille :{" "}
                 {typeof height ===
-                  "number"
+                "number"
                   ? `${Math.floor(
-                    height /
-                    100
-                  )}m${height % 100
-                  }`
+                      height / 100
+                    )}m${height % 100}`
                   : height}
               </p>
 
@@ -395,8 +418,7 @@ function ProfilePage() {
                   "#111111",
               }}
             >
-              Vos
-              statistiques
+              Vos statistiques
             </h2>
 
             <p
