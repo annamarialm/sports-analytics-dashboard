@@ -6,7 +6,8 @@ import useDashboardData from "../hooks/useDashboardData";
 function DashboardPage() {
   const {
     userInfo,
-    activity,
+    monthlyActivity,
+    weeklyActivity,
     loading,
     error,
   } = useDashboardData();
@@ -37,11 +38,18 @@ function DashboardPage() {
       />
 
       <PerformanceSection
-        activity={activity}
+        activity={
+          monthlyActivity
+        }
       />
 
       <WeeklySection
-        activity={activity}
+        activity={
+          weeklyActivity
+        }
+        weeklyGoal={
+          userInfo.weeklyGoal
+        }
       />
     </main>
   );

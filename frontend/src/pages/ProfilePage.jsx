@@ -3,7 +3,7 @@ import useDashboardData from "../hooks/useDashboardData";
 function ProfilePage() {
   const {
     userInfo,
-    activity,
+    profileActivity,
     loading,
     error,
   } = useDashboardData();
@@ -18,9 +18,6 @@ function ProfilePage() {
 
   const profile =
     userInfo.profile;
-
-  const stats =
-    userInfo.statistics;
 
   const joinDate =
     new Date(
@@ -39,9 +36,12 @@ function ProfilePage() {
     "Non renseigné";
 
   const gender =
-    profile.gender ??
-    "Non renseigné";
-
+    profile.gender === "female"
+      ? "Femme"
+      : profile.gender === "male"
+        ? "Homme"
+        : "Non renseigné";
+        
   const height =
     profile.height ??
     "Non renseigné";
@@ -51,7 +51,7 @@ function ProfilePage() {
     "Non renseigné";
 
   const totalMinutes =
-    activity.reduce(
+    profileActivity.reduce(
       (sum, item) =>
         sum +
         item.duration,
@@ -59,15 +59,24 @@ function ProfilePage() {
     );
 
   const totalCalories =
-    activity.reduce(
+    profileActivity.reduce(
       (sum, item) =>
         sum +
-        (item.caloriesBurned || 0),
+        (item.caloriesBurned ||
+          0),
+      0
+    );
+
+  const totalDistance =
+    profileActivity.reduce(
+      (sum, item) =>
+        sum +
+        item.distance,
       0
     );
 
   const sessionsCount =
-    activity.length;
+    profileActivity.length;
 
   const statCards = [
     {
@@ -76,17 +85,21 @@ function ProfilePage() {
       main: `${Math.floor(
         totalMinutes / 60
       )}h`,
-      unit: `${totalMinutes % 60}min`,
+      unit: `${totalMinutes % 60
+        }min`,
     },
     {
-      label: "Calories brûlées",
+      label:
+        "Calories brûlées",
       main: `${totalCalories}`,
       unit: "cal",
     },
     {
       label:
         "Distance totale parcourue",
-      main: `${stats.totalDistance}`,
+      main: `${totalDistance.toFixed(
+        1
+      )}`,
       unit: "km",
     },
     {
@@ -215,8 +228,7 @@ function ProfilePage() {
                 }}
               >
                 Membre depuis
-                le{" "}
-                {joinDate}
+                le {joinDate}
               </p>
             </div>
           </div>
@@ -328,8 +340,7 @@ function ProfilePage() {
                   ? `${Math.floor(
                     height /
                     100
-                  )}m${height %
-                  100
+                  )}m${height % 100
                   }`
                   : height}
               </p>

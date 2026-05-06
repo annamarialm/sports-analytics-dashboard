@@ -10,7 +10,8 @@ import {
 } from "recharts";
 
 function PerformanceSection({ activity }) {
-  const lastFourSessions = activity.slice(-4);
+  const lastFourSessions =
+    activity.slice(-4);
 
   const weekDays = [
     "Lun",
@@ -22,14 +23,51 @@ function PerformanceSection({ activity }) {
     "Dim",
   ];
 
-  const getDayLabel = (dateString) => {
-    const date = new Date(dateString);
-    const day = date.getDay();
+  const getDayLabel = (
+    dateString
+  ) => {
+    const date =
+      new Date(dateString);
+
+    const day =
+      date.getDay();
 
     return weekDays[
       day === 0 ? 6 : day - 1
     ];
   };
+
+  const formatDate = (
+    dateString
+  ) => {
+    return new Date(
+      dateString
+    ).toLocaleDateString(
+      "fr-FR",
+      {
+        day: "2-digit",
+        month: "long",
+      }
+    );
+  };
+
+  const startDate =
+    activity.length > 0
+      ? formatDate(
+          activity[0].date
+        )
+      : "";
+
+  const endDate =
+    activity.length > 0
+      ? formatDate(
+          activity[
+            activity.length - 1
+          ].date
+        )
+      : "";
+
+  const dateRange = `${startDate} - ${endDate}`;
 
   const kmData =
     lastFourSessions.map(
@@ -58,14 +96,15 @@ function PerformanceSection({ activity }) {
       })
     );
 
-  const averageKm = Math.round(
-    activity.reduce(
-      (sum, item) =>
-        sum +
-        item.distance,
-      0
-    ) / activity.length
-  );
+  const averageKm =
+    Math.round(
+      activity.reduce(
+        (sum, item) =>
+          sum +
+          item.distance,
+        0
+      ) / activity.length
+    );
 
   const averageBpm =
     Math.round(
@@ -229,8 +268,7 @@ function PerformanceSection({ activity }) {
                       "nowrap",
                   }}
                 >
-                  28 mai -
-                  25 juin
+                  {dateRange}
                 </span>
 
                 <button
@@ -309,9 +347,8 @@ function PerformanceSection({ activity }) {
                     ) =>
                       Math.ceil(
                         dataMax /
-                        10
-                      ) *
-                      10,
+                          10
+                      ) * 10,
                   ]}
                   tickCount={
                     5
@@ -401,6 +438,7 @@ function PerformanceSection({ activity }) {
             >
               ●
             </span>
+
             <span>
               Km
             </span>
@@ -492,8 +530,7 @@ function PerformanceSection({ activity }) {
                       "nowrap",
                   }}
                 >
-                  28 mai -
-                  04 juin
+                  {dateRange}
                 </span>
 
                 <button
@@ -600,12 +637,19 @@ function PerformanceSection({ activity }) {
                 <Bar
                   dataKey="min"
                   barSize={12}
-                  shape={({ x, y, width, height }) => (
+                  shape={({
+                    x,
+                    y,
+                    width,
+                    height,
+                  }) => (
                     <rect
                       x={x}
                       y={y}
                       width={width}
-                      height={height - 3}
+                      height={
+                        height - 3
+                      }
                       rx="7"
                       ry="7"
                       fill="#F7C0B4"
@@ -616,12 +660,19 @@ function PerformanceSection({ activity }) {
                 <Bar
                   dataKey="max"
                   barSize={12}
-                  shape={({ x, y, width, height }) => (
+                  shape={({
+                    x,
+                    y,
+                    width,
+                    height,
+                  }) => (
                     <rect
                       x={x}
                       y={y}
                       width={width}
-                      height={height - 3}
+                      height={
+                        height - 3
+                      }
                       rx="7"
                       ry="7"
                       fill="#FF4A0D"
@@ -637,13 +688,15 @@ function PerformanceSection({ activity }) {
                   dot={{
                     r: 4,
                     fill: "#0B23F4",
-                    stroke: "#FFFFFF",
+                    stroke:
+                      "#FFFFFF",
                     strokeWidth: 1,
                   }}
                   activeDot={{
                     r: 4,
                     fill: "#0B23F4",
-                    stroke: "#FFFFFF",
+                    stroke:
+                      "#FFFFFF",
                     strokeWidth: 1,
                   }}
                 />

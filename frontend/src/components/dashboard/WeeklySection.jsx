@@ -7,11 +7,13 @@ import {
 
 function WeeklySection({
   activity,
+  weeklyGoal,
 }) {
   const completed =
     activity.length;
 
-  const goal = 6;
+  const goal =
+    weeklyGoal ?? 6;
 
   const remaining =
     Math.max(
@@ -50,7 +52,7 @@ function WeeklySection({
     <section
       style={{
         width: "1052px",
-        minheight: "429px",
+        minHeight: "429px",
         display: "flex",
         flexDirection:
           "column",

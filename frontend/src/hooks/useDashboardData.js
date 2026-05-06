@@ -11,8 +11,20 @@ function useDashboardData() {
   const [userInfo, setUserInfo] =
     useState(null);
 
-  const [activity, setActivity] =
-    useState([]);
+  const [
+    monthlyActivity,
+    setMonthlyActivity,
+  ] = useState([]);
+
+  const [
+    weeklyActivity,
+    setWeeklyActivity,
+  ] = useState([]);
+
+  const [
+    profileActivity,
+    setProfileActivity,
+  ] = useState([]);
 
   const [loading, setLoading] =
     useState(true);
@@ -26,15 +38,40 @@ function useDashboardData() {
         const info =
           await getUserInfo(token);
 
-        const sessions =
+        const monthlySessions =
           await getUserActivity(
             token,
             "2025-06-01",
             "2025-06-30"
           );
 
+        const weeklySessions =
+          await getUserActivity(
+            token,
+            "2025-06-23",
+            "2025-06-30"
+          );
+
+        const profileSessions =
+          await getUserActivity(
+            token,
+            info.profile.createdAt,
+            "2025-12-31"
+          );
+
         setUserInfo(info);
-        setActivity(sessions);
+
+        setMonthlyActivity(
+          monthlySessions
+        );
+
+        setWeeklyActivity(
+          weeklySessions
+        );
+
+        setProfileActivity(
+          profileSessions
+        );
       } catch {
         setError(
           "Impossible de charger les données"
@@ -49,7 +86,9 @@ function useDashboardData() {
 
   return {
     userInfo,
-    activity,
+    monthlyActivity,
+    weeklyActivity,
+    profileActivity,
     loading,
     error,
   };
