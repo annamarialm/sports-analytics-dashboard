@@ -1,0 +1,89 @@
+.dashboard-header {
+  width: 1052px;
+  height: 181px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32px 52px;
+  border-radius: 20px;
+  background:
+    linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0)
+        -8.38%,
+      #ffffff 100%
+    );
+  box-sizing: border-box;
+}
+
+.dashboard-header__left {
+  width: 345px;
+  height: 117px;
+  display: flex;
+  align-items: center;
+  gap: 38px;
+}
+
+.dashboard-header__image {
+  width: 104px;
+  height: 117px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.dashboard-header__user-info {
+  width: 203px;
+  height: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+}
+
+.dashboard-header__name {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 500;
+  color: #111111;
+  line-height: 1;
+}
+
+.dashboard-header__join-date {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
+  color: #707070;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.dashboard-header__right {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.dashboard-header__label {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
+  color: #707070;
+  white-space: nowrap;
+}
+
+.dashboard-header__distance-card {
+  width: 208px;
+  height: 103px;
+  border-radius: 14px;
+  background: #0b23f4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dashboard-header__distance-value {
+  color: #ffffff;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1;
+}

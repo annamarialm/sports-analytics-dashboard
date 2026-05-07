@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
-import {
-  getUserInfo,
-  getUserActivity,
-} from "../services/api";
+
+import { getUserInfo }
+  from "../api/userApi";
+
+import { getUserActivity }
+  from "../api/activityApi";
+
+
 import useAuth from "./useAuth";
 
 function useDashboardData() {

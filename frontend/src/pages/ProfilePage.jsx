@@ -3,9 +3,13 @@ import {
   useParams,
 } from "react-router-dom";
 
+
+
 import useDashboardData from "../hooks/useDashboardData";
 import useAuth from "../hooks/useAuth";
 import NotFoundPage from "./NotFoundPage";
+import StatCard from "../components/StatCard/StatCard";
+import { formatGender } from "../services/formatGender";
 
 function ProfilePage() {
   const { userId } = useParams();
@@ -60,13 +64,6 @@ function ProfilePage() {
   const age =
     profile.age ??
     "Non renseigné";
-
-  const gender =
-    profile.gender === "female"
-      ? "Femme"
-      : profile.gender === "male"
-        ? "Homme"
-        : "Non renseigné";
 
   const height =
     profile.height ??
@@ -342,8 +339,7 @@ function ProfilePage() {
                     "#707070",
                 }}
               >
-                Genre : {gender}
-              </p>
+                Genre : {formatGender(profile.gender)}              </p>
 
               <p
                 style={{
@@ -361,10 +357,10 @@ function ProfilePage() {
               >
                 Taille :{" "}
                 {typeof height ===
-                "number"
+                  "number"
                   ? `${Math.floor(
-                      height / 100
-                    )}m${height % 100}`
+                    height / 100
+                  )}m${height % 100}`
                   : height}
               </p>
 
@@ -450,103 +446,14 @@ function ProfilePage() {
               marginTop: "32px",
             }}
           >
-            {statCards.map(
-              (
-                card,
-                index
-              ) => (
-                <div
-                  key={index}
-                  style={{
-                    width: "278px",
-                    height: "103px",
-                    padding:
-                      "20px 30px",
-                    borderRadius:
-                      "10px",
-                    background:
-                      "#0B23F4",
-                    color:
-                      "#FFFFFF",
-                    display:
-                      "flex",
-                    flexDirection:
-                      "column",
-                    justifyContent:
-                      "space-between",
-                    boxSizing:
-                      "border-box",
-                  }}
-                >
-                  <p
-                    style={{
-                      margin: 0,
-                      fontFamily:
-                        "Inter, sans-serif",
-                      fontWeight: 400,
-                      fontSize:
-                        "14px",
-                      lineHeight:
-                        "100%",
-                      color:
-                        "#FFFFFF",
-                    }}
-                  >
-                    {
-                      card.label
-                    }
-                  </p>
-
-                  <div
-                    style={{
-                      display:
-                        "flex",
-                      alignItems:
-                        "flex-end",
-                      gap: "4px",
-                    }}
-                  >
-                    <span
-                      style={{
-                        fontFamily:
-                          "Inter, sans-serif",
-                        fontWeight: 500,
-                        fontSize:
-                          "22px",
-                        lineHeight:
-                          "100%",
-                        color:
-                          "#FFFFFF",
-                      }}
-                    >
-                      {
-                        card.main
-                      }
-                    </span>
-
-                    <span
-                      style={{
-                        fontFamily:
-                          "Inter, sans-serif",
-                        fontWeight: 500,
-                        fontSize:
-                          "16px",
-                        lineHeight:
-                          "100%",
-                        color:
-                          "#B6BDFC",
-                        transform:
-                          "translateY(-1px)",
-                      }}
-                    >
-                      {
-                        card.unit
-                      }
-                    </span>
-                  </div>
-                </div>
-              )
-            )}
+            {statCards.map((card) => (
+              <StatCard
+                key={card.label}
+                label={card.label}
+                main={card.main}
+                unit={card.unit}
+              />
+            ))}
           </div>
         </div>
       </section>

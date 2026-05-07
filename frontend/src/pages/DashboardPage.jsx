@@ -1,6 +1,6 @@
-import DashboardHeader from "../components/dashboard/DashboardHeader";
-import PerformanceSection from "../components/dashboard/PerformanceSection";
-import WeeklySection from "../components/dashboard/WeeklySection";
+import DashboardHeader from "../components/DashboardHeader/DashboardHeader";
+import PerformanceSection from "../components/PerformanceSection/PerformanceSection";
+import WeeklySection from "../components/WeeklySection/WeeklySection";
 import useDashboardData from "../hooks/useDashboardData";
 
 function DashboardPage() {
